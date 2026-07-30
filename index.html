@@ -41,7 +41,7 @@
             position: relative;
         }
 
-        /* Анимированный фон */
+        /* Анимированный фон (только на ПК) */
         .animated-bg {
             position: fixed;
             top: 0;
@@ -504,7 +504,7 @@
             box-shadow: 0 15px 30px rgba(255, 179, 71, 0.6);
         }
 
-        /* Модальное окно (форма записи) */
+        /* Модальное окно */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -573,7 +573,7 @@
             color: #b9d9ff;
         }
 
-        /* Адаптивность */
+        /* ========== ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ ========== */
         @media (max-width: 768px) {
             html, body {
                 overflow-x: hidden;
@@ -581,6 +581,29 @@
             .container {
                 padding: 0 18px;
             }
+
+            /* Отключаем тяжёлые эффекты */
+            .animated-bg {
+                animation: none;
+                opacity: 0.02;
+            }
+            header {
+                backdrop-filter: none;
+                background: rgba(10, 25, 41, 0.95);
+            }
+            .hero::before {
+                animation: none;
+                opacity: 0.05;
+            }
+            .badge {
+                animation: none;
+            }
+            .about-highlight,
+            .tip-item {
+                backdrop-filter: none;
+                background: rgba(255, 255, 255, 0.85);
+            }
+
             .hero h2 {
                 font-size: 2.4rem;
             }
@@ -613,6 +636,11 @@
             }
             .step-number {
                 margin-bottom: 8px;
+            }
+
+            /* Убираем большие тени для производительности */
+            .card, .step, .gallery-item, .contact-box, .tip-item {
+                box-shadow: 0 8px 16px rgba(0,0,0,0.04);
             }
         }
 
@@ -647,6 +675,9 @@
             }
             .modal iframe {
                 height: 350px;
+            }
+            .section-title {
+                font-size: 1.9rem;
             }
         }
     </style>
@@ -804,6 +835,7 @@
     </div>
 
     <script>
+        // Модальное окно формы
         const modalOverlay = document.getElementById('modalOverlay');
         const openModalBtn = document.getElementById('openModalBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -824,6 +856,7 @@
             }
         });
 
+        // Lightbox для галереи
         const lightboxOverlay = document.getElementById('lightboxOverlay');
         const lightboxImage = document.getElementById('lightboxImage');
         const lightboxClose = document.getElementById('lightboxClose');
@@ -843,20 +876,28 @@
 
         lightboxClose.addEventListener('click', closeLightbox);
         lightboxOverlay.addEventListener('click', (e) => {
-            if (e.target === lightboxOverlay) closeLightbox();
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
+            }
         });
 
+        // Плавная прокрутка
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         });
 
+        // Анимации появления
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
         }, { threshold: 0.15 });
 
