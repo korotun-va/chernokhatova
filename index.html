@@ -6,7 +6,7 @@
     <title>Реабилитация спортсменов | Чернохатова Марина Геннадьевна</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,28 +14,88 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --deep: #0a1929;
+            --navy: #0f2b4b;
+            --accent: #ffb347;
+            --light: #f5f7fb;
+            --card: #ffffff;
+            --text: #1e293b;
+            --soft: #64748b;
+            --gradient-warm: linear-gradient(135deg, #ffb347 0%, #ff8c1a 100%);
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f5f7fb;
-            color: #1e293b;
+            background-color: var(--light);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+        }
+
+        /* Анимированный фон */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            background: radial-gradient(circle at 20% 30%, #ffb347 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, #0f2b4b 0%, transparent 50%);
+            animation: bgPulse 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% {
+                background-position: 0% 0%, 100% 100%;
+            }
+            100% {
+                background-position: 30% 20%, 70% 80%;
+            }
+        }
+
+        /* Анимации появления */
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .visible {
+            opacity: 1 !important;
+            transform: translateX(0) translateY(0) !important;
         }
 
         header {
-            background: linear-gradient(105deg, #0f2b4b 0%, #1b3a5c 100%);
+            background: rgba(10, 25, 41, 0.85);
+            backdrop-filter: blur(16px);
             color: white;
             padding: 16px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 179, 71, 0.2);
         }
 
         .header-inner {
@@ -48,14 +108,16 @@
 
         .logo h1 {
             font-size: 1.6rem;
-            font-weight: 700;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .logo span {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: #b9d9ff;
-            display: block;
         }
 
         nav ul {
@@ -71,139 +133,201 @@
             font-weight: 600;
             font-size: 0.95rem;
             transition: 0.3s;
-            border-bottom: 2px solid transparent;
+            position: relative;
             padding-bottom: 4px;
         }
 
-        nav a:hover {
-            border-bottom-color: #ffb347;
-            color: #ffb347;
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         .hero {
-            background: linear-gradient(120deg, #e9f0fa 0%, #dbeafe 100%);
-            padding: 70px 0 60px;
+            background: linear-gradient(105deg, rgba(15, 43, 75, 0.9) 0%, rgba(27, 58, 92, 0.8) 100%);
+            padding: 100px 0 80px;
             text-align: center;
-            border-bottom: 4px solid #ffb347;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--accent);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 179, 71, 0.15) 0%, transparent 60%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(20px, -20px) scale(1.1);
+            }
         }
 
         .hero h2 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            color: #0f2b4b;
-            margin-bottom: 16px;
+            font-size: 3.4rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 700px;
             margin: 0 auto 30px;
-            color: #334155;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
         }
 
         .badge {
             display: inline-block;
-            background: #ffb347;
-            color: #0f2b4b;
+            background: var(--gradient-warm);
+            color: #0a1929;
             font-weight: 700;
-            padding: 10px 24px;
-            border-radius: 40px;
+            padding: 12px 30px;
+            border-radius: 50px;
             font-size: 1rem;
-            margin-top: 10px;
-            box-shadow: 0 6px 18px rgba(255,179,71,0.4);
+            position: relative;
+            box-shadow: 0 8px 25px rgba(255, 179, 71, 0.5);
+            animation: floatBadge 3s ease-in-out infinite;
+        }
+
+        @keyframes floatBadge {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         section {
-            padding: 70px 0;
+            padding: 90px 0;
+            position: relative;
+            z-index: 1;
         }
 
         .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0f2b4b;
-            margin-bottom: 12px;
-            position: relative;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--deep);
+            margin-bottom: 18px;
             display: inline-block;
+            position: relative;
         }
 
-        .section-title:after {
+        .section-title::after {
             content: '';
             position: absolute;
             left: 0;
-            bottom: -8px;
-            width: 70px;
-            height: 4px;
-            background: #ffb347;
-            border-radius: 2px;
+            bottom: -10px;
+            width: 60px;
+            height: 5px;
+            background: var(--gradient-warm);
+            border-radius: 3px;
         }
 
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 48px;
+            gap: 50px;
             align-items: start;
-            margin-top: 32px;
+            margin-top: 40px;
         }
 
         .about-text p {
-            margin-bottom: 16px;
-            font-size: 1.05rem;
+            margin-bottom: 18px;
+            font-size: 1.08rem;
         }
 
         .about-highlight {
-            background: white;
-            padding: 24px;
-            border-radius: 20px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.05);
-            border-left: 6px solid #ffb347;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        .about-highlight:hover {
+            transform: translateY(-6px);
         }
 
         .about-highlight ul {
             list-style: none;
         }
-
         .about-highlight li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: 500;
             display: flex;
             gap: 10px;
+            align-items: flex-start;
         }
-
         .about-highlight li::before {
             content: "✓";
-            color: #ffb347;
+            color: var(--accent);
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
 
         .card {
-            background: white;
-            border-radius: 24px;
-            padding: 28px 20px;
-            box-shadow: 0 20px 30px rgba(0,0,0,0.04);
-            transition: transform 0.3s;
+            background: var(--card);
+            border-radius: 28px;
+            padding: 30px 24px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: center;
-            border: 1px solid #f0f4fe;
+            border: 1px solid rgba(255, 179, 71, 0.15);
+            cursor: default;
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent);
         }
 
         .card-icon {
-            font-size: 2.8rem;
-            margin-bottom: 18px;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover .card-icon {
+            transform: scale(1.2);
         }
 
         .card h3 {
             font-weight: 700;
-            color: #0f2b4b;
+            color: var(--deep);
             margin-bottom: 12px;
         }
 
@@ -215,20 +339,26 @@
         }
 
         .step {
-            background: white;
+            background: var(--card);
             border-radius: 20px;
             padding: 24px 28px;
             display: flex;
             gap: 20px;
             align-items: center;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
-            border-left: 8px solid #ffb347;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+            border-left: 8px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateX(8px);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.1);
         }
 
         .step-number {
-            background: #0f2b4b;
+            background: var(--deep);
             color: white;
-            font-weight: 800;
+            font-weight: 900;
             font-size: 1.6rem;
             width: 60px;
             height: 60px;
@@ -241,74 +371,156 @@
 
         .step-content h3 {
             font-weight: 700;
-            color: #0f2b4b;
+            color: var(--deep);
             margin-bottom: 6px;
         }
 
         .tips-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 24px;
             margin-top: 40px;
         }
 
         .tip-item {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 22px rgba(0,0,0,0.03);
-            transition: 0.2s;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
         }
 
         .tip-item:hover {
-            background: #f0f6ff;
+            background: white;
+            border-color: var(--accent);
+            transform: translateY(-5px);
         }
 
-        .contact-box {
-            background: #0f2b4b;
-            color: white;
-            border-radius: 28px;
-            padding: 40px;
-            margin-top: 32px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            justify-content: space-between;
-            align-items: center;
+        /* Галерея */
+        #gallery {
+            background: white;
+            position: relative;
+            overflow: hidden;
         }
-
-        .contact-info p {
-            margin: 12px 0;
+        .gallery-title-wrapper {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .gallery-title-wrapper h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--deep);
+        }
+        .gallery-subtitle {
+            color: var(--soft);
             font-size: 1.1rem;
         }
 
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 20px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+        }
+        .lightbox-content img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 16px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            background: none;
+            border: none;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Контакты */
+        .contact-box {
+            background: var(--deep);
+            color: white;
+            border-radius: 32px;
+            padding: 50px;
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
         .contact-btn {
-            background: #ffb347;
-            color: #0f2b4b;
+            background: var(--gradient-warm);
+            color: var(--deep);
             font-weight: 700;
-            padding: 14px 30px;
-            border-radius: 40px;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.2s;
+            padding: 16px 32px;
+            border-radius: 60px;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 179, 71, 0.4);
         }
-
         .contact-btn:hover {
-            background: #ffa01c;
-            transform: scale(1.03);
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 179, 71, 0.6);
         }
 
-        footer {
-            text-align: center;
-            padding: 28px 0;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-
-        /* Модальное окно */
+        /* ---------- Модальное окно (форма записи) ---------- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -316,7 +528,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(10, 25, 41, 0.7);
+            backdrop-filter: blur(10px);
             align-items: center;
             justify-content: center;
             z-index: 200;
@@ -324,18 +537,24 @@
         }
 
         .modal {
-            background: white;
-            border-radius: 24px;
+            background: #ffffff;
+            border-radius: 28px;
             max-width: 500px;
             width: 100%;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.25);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             position: relative;
             padding: 32px;
             box-sizing: border-box;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal h2 {
-            color: #0f2b4b;
+            color: #0a1929;
             margin-bottom: 20px;
             font-weight: 700;
             text-align: center;
@@ -343,126 +562,51 @@
 
         .close-modal {
             position: absolute;
-            top: 16px;
-            right: 20px;
+            top: 12px;
+            right: 18px;
             background: none;
             border: none;
-            font-size: 1.8rem;
+            font-size: 2rem;
             cursor: pointer;
             color: #64748b;
+            transition: color 0.2s;
+        }
+        .close-modal:hover {
+            color: #ffb347;
         }
 
         .modal iframe {
             width: 100%;
             height: 450px;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: var(--deep);
+            color: #b9d9ff;
         }
 
         /* Адаптивность */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
-
-            .header-inner {
-                flex-direction: column;
-                text-align: center;
-                gap: 12px;
-            }
-
-            nav ul {
-                gap: 16px;
-                justify-content: center;
-            }
-
-            .hero {
-                padding: 50px 0 40px;
-            }
-
             .hero h2 {
-                font-size: 2rem;
+                font-size: 2.4rem;
             }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.7rem;
-            }
-
             .about-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
             }
-
-            .cards {
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
-
-            .card {
-                padding: 20px 16px;
-            }
-
-            .card-icon {
-                font-size: 2.2rem;
-                margin-bottom: 12px;
-            }
-
-            .card h3 {
-                font-size: 1rem;
-            }
-
-            .card p {
-                font-size: 0.9rem;
-            }
-
-            .steps {
-                gap: 16px;
-            }
-
-            .step {
-                padding: 16px;
-                gap: 14px;
-            }
-
-            .step-number {
-                width: 44px;
-                height: 44px;
-                font-size: 1.2rem;
-            }
-
-            .tips-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 16px;
-            }
-
-            .tip-item {
-                padding: 16px;
-            }
-
             .contact-box {
                 flex-direction: column;
-                text-align: left;
-                padding: 28px 20px;
-                gap: 20px;
-            }
-
-            .contact-info p {
-                font-size: 1rem;
-            }
-
-            .contact-btn {
-                width: 100%;
                 text-align: center;
             }
-
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
             .modal {
                 padding: 20px;
             }
-
             .modal iframe {
                 height: 400px;
             }
@@ -470,75 +614,16 @@
 
         @media (max-width: 480px) {
             .hero h2 {
-                font-size: 1.7rem;
+                font-size: 2rem;
             }
-
-            .hero p {
-                font-size: 0.9rem;
-            }
-
-            .badge {
-                font-size: 0.8rem;
-                padding: 8px 16px;
-            }
-
-            .logo h1 {
-                font-size: 1.3rem;
-            }
-
-            .logo span {
-                font-size: 0.75rem;
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .tips-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .step {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .step-number {
-                margin-bottom: 4px;
-            }
-
-            .step-content h3 {
-                font-size: 1rem;
-            }
-
-            .step-content p {
-                font-size: 0.9rem;
-            }
-
-            .modal {
-                max-width: 95%;
-                padding: 16px 12px;
-            }
-
-            .modal h2 {
-                font-size: 1.2rem;
-            }
-
             .modal iframe {
-                height: 370px;
-            }
-
-            .close-modal {
-                top: 8px;
-                right: 12px;
-                font-size: 1.6rem;
+                height: 350px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="animated-bg"></div>
     <header>
         <div class="container header-inner">
             <div class="logo">
@@ -550,6 +635,7 @@
                     <li><a href="#about">Обо мне</a></li>
                     <li><a href="#services">Услуги</a></li>
                     <li><a href="#stages">Этапы</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
                     <li><a href="#tips">Советы</a></li>
                     <li><a href="#contact">Контакты</a></li>
                 </ul>
@@ -558,7 +644,7 @@
     </header>
 
     <section class="hero">
-        <div class="container">
+        <div class="container fade-in-up">
             <h2>Реабилитация спортсменов</h2>
             <p>Профессиональное восстановление после травм и нагрузок. Тренерский стаж с 1988 года. Индивидуальный подход, современные методики и богатый опыт.</p>
             <div class="badge">Высшая квалификационная категория (до 2030 г.)</div>
@@ -567,20 +653,19 @@
 
     <section id="about">
         <div class="container">
-            <h2 class="section-title">Обо мне</h2>
+            <h2 class="section-title fade-in-left">Обо мне</h2>
             <div class="about-grid">
-                <div class="about-text">
+                <div class="about-text fade-in-left">
                     <p>Меня зовут <strong>Чернохатова Марина Геннадьевна</strong>. Я тренер и преподаватель физической культуры, <strong>Почетный работник общего образования РФ</strong>. С 1988 года занимаюсь тренерской деятельностью. Среди моих учеников — мастера спорта и кандидаты в мастера спорта. Сама продолжаю участвовать в соревнованиях, поддерживая форму и подтверждая методики на практике.</p>
-                    <p>Имею высшее образование по специальности «Физическая культура», квалификация «Тренер. Преподаватель физической культуры». Дополнительное образование: лечебный массаж, методика организации занятий с элементами ЛФК, биомеханика движений в комплексной и медицинской реабилитации. 30 июля сдан экзамен по мануально-мышечному тестированию.</p>
-                    <p>Регулярно повышаю квалификацию: прошла обучение по аспектам преподавания физической культуры в условиях обновлённых ФГОС, оказанию первой помощи, а также углублённый курс по образовательной практике учителя физической культуры (2023–2026 гг.).</p>
+                    <p>Имею высшее образование по специальности «Физическая культура», квалификация «Тренер. Преподаватель физической культуры». Дополнительное образование: лечебный массаж, методика организации занятий с элементами ЛФК, биомеханика движений в комплексной и медицинской реабилитации, мануально-мышечное тестирование.</p>
                 </div>
-                <div class="about-highlight">
+                <div class="about-highlight fade-in-right">
                     <h3>Ключевые компетенции</h3>
                     <ul>
                         <li><strong>Тренерская деятельность с 1988 г.</strong> – подготовка спортсменов разного уровня</li>
                         <li><strong>Лечебный массаж и ЛФК</strong> – восстановление после травм и заболеваний</li>
                         <li><strong>Биомеханика движений</strong> – комплексная и медицинская реабилитация</li>
-                        <li><strong>Мануально-мышечное тестирование</strong> (экзамен 30.07)</li>
+                        <li><strong>Мануально-мышечное тестирование</strong></li>
                         <li><strong>Адаптивная физкультура для детей с ОВЗ</strong> (опыт работы с обучающимися с ЗПР)</li>
                         <li><strong>Высшая категория</strong> (приказ от 25.04.2025, действует до 25.04.2030)</li>
                     </ul>
@@ -591,64 +676,41 @@
 
     <section id="services" style="background: #ffffff;">
         <div class="container">
-            <h2 class="section-title">Направления работы</h2>
+            <h2 class="section-title fade-in-left">Направления работы</h2>
             <div class="cards">
-                <div class="card">
-                    <div class="card-icon">🦵</div>
-                    <h3>Посттравматическое восстановление</h3>
-                    <p>Восстановление после растяжений, вывихов, переломов. Возвращение подвижности и силы.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💆</div>
-                    <h3>Лечебный массаж</h3>
-                    <p>Классический, спортивный и реабилитационный массаж для снятия напряжения и улучшения кровообращения.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🧘</div>
-                    <h3>ЛФК и биомеханика</h3>
-                    <p>Индивидуальные комплексы упражнений с учётом биомеханики движений, коррекция осанки и походки.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🧠</div>
-                    <h3>Мануально-мышечное тестирование</h3>
-                    <p>Оценка функционального состояния мышц и суставов для точной диагностики и контроля восстановления.</p>
-                </div>
+                <div class="card fade-in-up"><div class="card-icon">🦵</div><h3>Посттравматическое восстановление</h3><p>Восстановление после растяжений, вывихов, переломов. Возвращение подвижности и силы.</p></div>
+                <div class="card fade-in-up" style="transition-delay:0.1s"><div class="card-icon">💆</div><h3>Лечебный массаж</h3><p>Классический, спортивный и реабилитационный массаж для снятия напряжения и улучшения кровообращения.</p></div>
+                <div class="card fade-in-up" style="transition-delay:0.2s"><div class="card-icon">🧘</div><h3>ЛФК и биомеханика</h3><p>Индивидуальные комплексы упражнений с учётом биомеханики движений, коррекция осанки и походки.</p></div>
+                <div class="card fade-in-up" style="transition-delay:0.3s"><div class="card-icon">🧠</div><h3>Мануально-мышечное тестирование</h3><p>Оценка функционального состояния мышц и суставов для точной диагностики и контроля восстановления.</p></div>
             </div>
         </div>
     </section>
 
-    <section id="stages" style="background: #f5f7fb;">
+    <section id="stages" style="background: #f9fafb;">
         <div class="container">
-            <h2 class="section-title">Этапы реабилитации</h2>
+            <h2 class="section-title fade-in-left">Этапы реабилитации</h2>
             <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Оценка состояния и диагностика</h3>
-                        <p>Сбор анамнеза, функциональное тестирование, консультация с лечащим врачом.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Острый восстановительный период</h3>
-                        <p>Снижение боли и отёка, мягкие мобилизации, дыхательные упражнения, ранняя активизация.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Функциональное восстановление</h3>
-                        <p>Укрепление мышц, развитие гибкости, координации. Специальные упражнения.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>Возвращение к тренировкам</h3>
-                        <p>Постепенная интеграция в общую группу, контроль техники, профилактические рекомендации.</p>
-                    </div>
-                </div>
+                <div class="step fade-in-left"><div class="step-number">1</div><div class="step-content"><h3>Оценка состояния и диагностика</h3><p>Сбор анамнеза, функциональное тестирование, консультация с лечащим врачом.</p></div></div>
+                <div class="step fade-in-right" style="transition-delay:0.1s"><div class="step-number">2</div><div class="step-content"><h3>Острый восстановительный период</h3><p>Снижение боли и отёка, мягкие мобилизации, дыхательные упражнения, ранняя активизация.</p></div></div>
+                <div class="step fade-in-left" style="transition-delay:0.2s"><div class="step-number">3</div><div class="step-content"><h3>Функциональное восстановление</h3><p>Укрепление мышц, развитие гибкости, координации. Специальные упражнения.</p></div></div>
+                <div class="step fade-in-right" style="transition-delay:0.3s"><div class="step-number">4</div><div class="step-content"><h3>Возвращение к тренировкам</h3><p>Постепенная интеграция в общую группу, контроль техники, профилактические рекомендации.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <div class="gallery-title-wrapper">
+                <h2>Путь к результату</h2>
+                <p class="gallery-subtitle">От реабилитации и тренировок до больших стартов — результаты работы моих подопечных</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item fade-in-up"><img src="img/photo1.jpg" alt="Реабилитация и ЛФК" loading="lazy"><div class="gallery-caption">Реабилитация и ЛФК: восстановление подвижности и силы</div></div>
+                <div class="gallery-item fade-in-up"><img src="img/photo2.jpg" alt="Функциональная тренировка" loading="lazy"><div class="gallery-caption">Функциональная тренировка: баланс, координация, сила</div></div>
+                <div class="gallery-item fade-in-up"><img src="img/photo3.jpg" alt="Баланс и стабилизация" loading="lazy"><div class="gallery-caption">Баланс и стабилизация: подготовка к нагрузкам</div></div>
+                <div class="gallery-item fade-in-up"><img src="img/photo4.jpg" alt="Городской марафон" loading="lazy"><div class="gallery-caption">Тренировки, где важен не только результат, но и вовлечённость: работаем над прогрессом вместе</div></div>
+                <div class="gallery-item fade-in-up"><img src="img/photo6.jpg" alt="Массовый старт" loading="lazy"><div class="gallery-caption">Турнир: первые победы и награды юных спортсменов</div></div>
+                <div class="gallery-item fade-in-up"><img src="img/photo7.jpg" alt="Вечерний забег" loading="lazy"><div class="gallery-caption">Массовый старт: командный дух и мотивация</div></div>
             </div>
         </div>
     </section>
@@ -657,22 +719,10 @@
         <div class="container">
             <h2 class="section-title">Полезные советы</h2>
             <div class="tips-grid">
-                <div class="tip-item">
-                    <h3>🏃 Разминка — закон</h3>
-                    <p>10–15 минут динамических упражнений снижают риск травм на 40%.</p>
-                </div>
-                <div class="tip-item">
-                    <h3>💧 Водный баланс</h3>
-                    <p>Обезвоживание замедляет восстановление. Пейте воду.</p>
-                </div>
-                <div class="tip-item">
-                    <h3>😴 Сон и восстановление</h3>
-                    <p>8–9 часов сна — лучшее лекарство для мышц и нервной системы.</p>
-                </div>
-                <div class="tip-item">
-                    <h3>🥗 Питание при реабилитации</h3>
-                    <p>Белок, омега-3, витамин D и кальций ускоряют заживление.</p>
-                </div>
+                <div class="tip-item fade-in-up"><h3>🏃 Разминка — закон</h3><p>10–15 минут динамических упражнений снижают риск травм на 40%.</p></div>
+                <div class="tip-item fade-in-up" style="transition-delay:0.1s"><h3>💧 Водный баланс</h3><p>Обезвоживание замедляет восстановление. Пейте воду.</p></div>
+                <div class="tip-item fade-in-up" style="transition-delay:0.2s"><h3>😴 Сон и восстановление</h3><p>8–9 часов сна — лучшее лекарство для мышц и нервной системы.</p></div>
+                <div class="tip-item fade-in-up" style="transition-delay:0.3s"><h3>🥗 Питание при реабилитации</h3><p>Белок, омега-3, витамин D и кальций ускоряют заживление.</p></div>
             </div>
         </div>
     </section>
@@ -680,11 +730,10 @@
     <section id="contact">
         <div class="container">
             <h2 class="section-title">Свяжитесь со мной</h2>
-            <div class="contact-box">
+            <div class="contact-box fade-in-up">
                 <div class="contact-info">
                     <p><strong>📞 Телефон:</strong> +7 (918) 580-44-02</p>
                     <p><strong>✉️ Email:</strong> bagira_479@mail.ru</p>
-                    <p style="color:#ffb347; font-weight:600;">Все консультации и занятия проводятся на безвозмездной основе</p>
                     <p><strong>🔗 Клуб «Легенда» Таганрог:</strong><br>
                        <a href="https://vk.ru/club57239984" target="_blank" style="color:#ffb347; text-decoration:underline;">ВКонтакте</a> |
                        <a href="https://t.me/taganrog_legenda_beg" target="_blank" style="color:#ffb347; text-decoration:underline;">Telegram</a> |
@@ -717,7 +766,16 @@
         </div>
     </div>
 
+    <!-- Lightbox для галереи -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="">
+        </div>
+    </div>
+
     <script>
+        // Модальное окно формы
         const modalOverlay = document.getElementById('modalOverlay');
         const openModalBtn = document.getElementById('openModalBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -738,6 +796,32 @@
             }
         });
 
+        // Lightbox для галереи
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImage.src = img.src;
+                lightboxImage.alt = img.alt;
+                lightboxOverlay.style.display = 'flex';
+            });
+        });
+
+        function closeLightbox() {
+            lightboxOverlay.style.display = 'none';
+            lightboxImage.src = '';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
+            }
+        });
+
+        // Плавная прокрутка для навигации
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -747,6 +831,17 @@
                 }
             });
         });
+
+        // Анимации появления блоков при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in-left, .fade-in-right, .fade-in-up').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
